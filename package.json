@@ -1,0 +1,49 @@
+{
+    "name": "github-releases-for-automated-package-publishing-action",
+    "description": "GitHub Action to validate and extract GitHub release information, used for automated package publishing.",
+    "version": "0.0.0",
+    "author": {
+        "name": "Michael Novotny",
+        "email": "manovotny@gmail.com",
+        "url": "https://manovotny.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/manovotny/github-releases-for-automated-package-publishing-action.git"
+    },
+    "keywords": [
+        "action",
+        "actions",
+        "automated",
+        "automation",
+        "github",
+        "github-actions",
+        "npm",
+        "release",
+        "publish",
+        "publishing",
+        "semver",
+        "version",
+        "yarn"
+    ],
+    "engines": {
+        "node": ">=8.6.0",
+        "yarn": ">=1.0.0"
+    },
+    "main": "index.js",
+    "scripts": {
+        "build": "ncc build index.js",
+        "test": "echo TODO"
+    },
+    "dependencies": {
+        "@actions/core": "1.2.6",
+        "@actions/github": "4.0.0",
+        "dot-prop": "6.0.1",
+        "fs-extra": "9.0.1",
+        "semver": "7.3.4"
+    },
+    "devDependencies": {
+        "@vercel/ncc": "0.26.1"
+    }
+}
