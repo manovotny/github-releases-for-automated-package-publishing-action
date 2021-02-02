@@ -9,7 +9,7 @@ const semver = require('semver');
         const {
             draft: releaseIsDraft,
             prerelease: releaseIsPrerelease,
-            tag_name: releaseVersion
+            tag_name: releaseVersion,
         } = github.context.payload.release;
         const releaseVersionWithoutV = releaseVersion.substring(1);
         const packageJson = await fs.readJson('./package.json');
