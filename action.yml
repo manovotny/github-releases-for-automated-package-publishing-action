@@ -8,6 +8,6 @@ runs:
     main: 'dist/index.js'
 outputs:
     tag:
-        description: 'Tag to publish (optional)'
+        description: 'Version tag to publish (if it exists)'
     version:
         description: 'Version to publish'
