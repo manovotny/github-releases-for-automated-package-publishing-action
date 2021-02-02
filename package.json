@@ -34,7 +34,20 @@
     "main": "index.js",
     "scripts": {
         "build": "ncc build index.js",
-        "test": "echo TODO"
+        "prettier": "prettier --write \"**/*.{js,json,md,yml}\"",
+        "prettier:check": "prettier --check \"**/*.{js,json,md,yml}\"",
+        "test": "yarn prettier:check"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,json,md,yml}": [
+            "prettier --write",
+            "git add"
+        ]
     },
     "dependencies": {
         "@actions/core": "1.2.6",
@@ -44,6 +57,9 @@
         "semver": "7.3.4"
     },
     "devDependencies": {
-        "@vercel/ncc": "0.27.0"
+        "@vercel/ncc": "0.27.0",
+        "husky": "4.3.8",
+        "lint-staged": "10.5.3",
+        "prettier": "2.2.1"
     }
 }
