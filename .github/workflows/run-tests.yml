@@ -1,7 +1,7 @@
-name: pull-request
+name: Run tests
 on: pull_request
 jobs:
-    test:
+    run-tests:
         runs-on: ubuntu-latest
         steps:
             - name: Cancel running workflows
