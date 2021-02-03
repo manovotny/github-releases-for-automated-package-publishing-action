@@ -1,4 +1,4 @@
-name: Compress images
+name: Optimize images
 on:
     pull_request:
         paths:
@@ -18,13 +18,13 @@ on:
         schedule:
             - cron: '00 23 * * 0'
 jobs:
-    compress-images:
+    optimize-images:
         runs-on: ubuntu-latest
         if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         steps:
             - name: Checkout repo
               uses: actions/checkout@v2
-            - name: Compress images
+            - name: Optimize images
               id: images
               uses: calibreapp/image-actions@1.1.0
               with:
