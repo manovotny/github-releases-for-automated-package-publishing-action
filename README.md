@@ -15,7 +15,7 @@ This GitHub Action was created to overcome these limitations and gaps. This acti
 -   Ensure git tags start with a `v`, like `npm version` and `yarn version`.
 -   Ensure that the `version` in `package.json` matches the release being created.
 -   Ensure versions are valid [semver](https://semver.org/) format.
--   Ensure the GitHub release is marked as a prerelease if the semver version has a prerelease tag.
+-   Ensure the GitHub release is marked as a pre-release if the semver version has a pre-release tag.
 -   Allow only users with write permissions to create releases.
 -   Allow packages to be published from any branch, which is great for publishing pre-releases before code is merged into the default branch.
 -   Allow full control on how to publish, without assuming anything, like yarn vs. npm, NPM registry vs. GitHub Packages registry, running additional validation or build steps prior to publishing, etc.
@@ -202,7 +202,15 @@ With all of the above in place, publishing a package is as easy as creating a ne
 ![Releases](.github/assets/releases.jpg)
 ![Draft a new release](.github/assets/draft-a-new-release.jpg)
 
-From there, you need to decide what kind of release you want to make.
+When making a release, please keep in mind that this action expects and validates a few things:
+
+-   Releases marked as drafts will be ignored (ie. they will not publish).
+-   Ensure the git tag you create during the release process starts with a `v` (ie. v1.2.3).
+-   Ensure that the `version` in `package.json` matches the release tag created.
+-   Ensure versions are valid [semver](https://semver.org/) format.
+-   Ensure the GitHub release is marked as a pre-release if the semver version has a pre-release tag.
+
+Now you need to decide what kind of release you want to make.
 
 <details>
   <summary>How to Publish a Version</summary>
