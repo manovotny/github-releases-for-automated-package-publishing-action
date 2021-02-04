@@ -26,7 +26,7 @@ jobs:
               uses: actions/checkout@v2
             - name: Optimize images
               id: images
-              uses: calibreapp/image-actions@1.1.0
+              uses: calibreapp/image-actions@main
               with:
                   compressOnly: ${{ github.event_name != 'pull_request' }}
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
