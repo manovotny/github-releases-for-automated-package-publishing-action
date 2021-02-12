@@ -157,7 +157,7 @@ jobs:
             # This example is using NPM's registry. If you were publishing to GitHub's
             # Package registry, you'd use `https://npm.pkg.github.com` instead.
             - name: Set node version
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v2
               with:
                   always-auth: true
                   node-version: '12.x'
@@ -236,6 +236,8 @@ The screenshots below will visually walk you through the process.
 
 </details>
 
+## Troubleshooting
+
 <details>
   <summary>How to Handle Release Failures</summary>
 
@@ -257,6 +259,26 @@ The screenshots below will visually walk you through the process.
 ![Delete tag](.github/assets/handle-release-failure-step-6.jpg)
 ![Delete tag confirmation](.github/assets/handle-release-failure-step-7.jpg)
 ![Delete tag success message](.github/assets/handle-release-failure-step-8.jpg)
+
+</details>
+
+<details>
+  <summary>Fixing "No Token Found" Error Message When Publishing</summary>
+
+![error No token found and can't prompt for login when running with --non-interactive.](.github/assets/error-no-token-found.jpg)
+
+First thing to check is that you've [added a package registry token to your GitHub secrets](https://github.com/manovotny/github-releases-for-automated-package-publishing-action#add-package-registry-token-to-github-secrets).
+
+If you're still getting the error, then it's because you likely forgot to add the `always-auth` and `registry-url` properties when setting the node version in your workflow.
+
+```yml
+- name: Set node version
+  uses: actions/setup-node@v2
+  with:
+      always-auth: true
+      node-version: '12'
+      registry-url: 'https://registry.npmjs.org'
+```
 
 </details>
 
