@@ -1,4 +1,4 @@
-name: Optimize images
+name: image-optimization
 on:
     pull_request:
         paths:
@@ -18,7 +18,7 @@ on:
         schedule:
             - cron: '00 23 * * 0'
 jobs:
-    optimize-images:
+    image-optimization:
         runs-on: ubuntu-latest
         if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         steps:
@@ -34,7 +34,7 @@ jobs:
               if: github.event_name != 'pull_request' && steps.images.outputs.markdown != ''
               uses: peter-evans/create-pull-request@v3
               with:
-                  title: Optimizes images
+                  title: Optimizes images.
                   branch-suffix: timestamp
                   commit-message: Optimizes images.
                   body: ${{ steps.images.outputs.markdown }}
