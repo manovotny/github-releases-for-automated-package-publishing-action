@@ -12,7 +12,8 @@ const semver = require('semver');
             tag_name: releaseVersion,
         } = github.context.payload.release;
         const releaseVersionWithoutV = releaseVersion.substring(1);
-        const packageJson = await fs.readJson('./package.json');
+        const packageJsonPath = core.getInput('package-path');
+        const packageJson = await fs.readJson(packageJsonPath);
         const packageJsonVersion = dotProp.get(packageJson, 'version', undefined);
 
         if (releaseIsDraft) {

@@ -6,6 +6,10 @@ branding:
 runs:
     using: 'node12'
     main: 'dist/index.js'
+inputs:
+    package-path:
+        description: 'Path to package.json'
+        default: './package.json'
 outputs:
     tag:
         description: 'Version tag to publish (if it exists)'
