@@ -35,14 +35,13 @@
         "check": "npm-check -u",
         "build": "ncc build index.js",
         "lint": "eslint . --ext .js --ext .json",
+        "lint-staged": "lint-staged",
         "prettier": "prettier --write \"**/*.{js,json,md,yml}\"",
         "prettier:check": "prettier --check \"**/*.{js,json,md,yml}\"",
         "test": "npm run lint && npm run prettier:check"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
+    "git": {
+        "pre-commit": "lint-staged"
     },
     "lint-staged": {
         "*.{js,json,md,yml}": [
@@ -58,11 +57,11 @@
         "semver": "7.3.4"
     },
     "devDependencies": {
+        "@vercel/git-hooks": "1.0.0",
         "@vercel/ncc": "0.27.0",
         "eslint": "6.2.1",
         "eslint-config-get-off-my-lawn": "5.0.1",
-        "husky": "4.3.8",
-        "lint-staged": "10.5.3",
+        "lint-staged": "13.0.3",
         "npm-check": "6.0.1",
         "prettier": "2.2.1"
     }
