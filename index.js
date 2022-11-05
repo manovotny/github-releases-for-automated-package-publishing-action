@@ -3,75 +3,80 @@ const github = require('@actions/github');
 const dotProp = require('dot-prop');
 const fs = require('fs-extra');
 const semver = require('semver');
+const dedent = require('dedent');
 
-(async () => {
+const main = async () => {
     try {
-        const {
-            draft: releaseIsDraft,
-            prerelease: releaseIsMarkedAsPrerelease,
-            tag_name: releaseVersion,
-        } = github.context.payload.release;
-        const releaseVersionWithoutV = releaseVersion.slice(1);
+        const {draft: isDraft, prerelease: isPrerelease, tag_name: gitTag} = github.context.payload.release;
+        const gitTagWithoutV = gitTag.slice(1);
         const packageJson = await fs.readJson('./package.json');
         const packageJsonVersion = dotProp.get(packageJson, 'version', undefined);
 
-        if (releaseIsDraft) {
+        if (isDraft) {
             core.setFailed('Release is a draft. Skip publish.');
 
             return;
         }
 
-        if (!releaseVersion.startsWith('v')) {
-            core.setFailed('Release tag does not start with `v`, ie. `v1.2.3`.');
+        if (!gitTag.startsWith('v')) {
+            core.setFailed('Release git tag does not start with `v`, ie. `v1.2.3`.');
 
             return;
         }
 
-        if (releaseVersionWithoutV !== packageJsonVersion) {
-            core.setFailed(`
-                Release version does not match package.json version.
-                Release version: ${releaseVersionWithoutV}
-                Package.json version: ${packageJsonVersion}
-            `);
+        if (gitTagWithoutV !== packageJsonVersion) {
+            core.setFailed(
+                dedent(`
+                    Release git tag does not match package.json version.
+                    Release git tag: ${gitTagWithoutV}
+                    Package.json version: ${packageJsonVersion}
+                `)
+            );
 
             return;
         }
 
-        if (!semver.valid(releaseVersionWithoutV)) {
-            core.setFailed(`Release and package.json versions are not valid semver.`);
+        if (!semver.valid(gitTagWithoutV)) {
+            core.setFailed('Release git tag and package.json versions are not valid semver.');
 
             return;
         }
 
-        const semverPrerelease = semver.prerelease(releaseVersionWithoutV);
+        const semverPrerelease = semver.prerelease(gitTagWithoutV);
         // eslint-disable-next-line unicorn/no-null
-        const semverHasPrereleaseTag = semverPrerelease !== null;
+        const hasSemverPrerelease = semverPrerelease !== null;
 
-        let tag = '';
+        let versionTag = '';
 
-        if (releaseIsMarkedAsPrerelease && !semverHasPrereleaseTag) {
+        if (isPrerelease && !hasSemverPrerelease) {
             core.setFailed(
-                'Release in GitHub is marked as `pre-release`, but release tag and package.json versions do not follow pre-release format, ie. `1.2.3-beta.1'
+                'Release in GitHub is marked as `pre-release`, but release git tag and package.json versions do not follow pre-release format, ie. `1.2.3-beta.1'
             );
 
             return;
         }
 
-        if (!releaseIsMarkedAsPrerelease && semverHasPrereleaseTag) {
+        if (!isPrerelease && hasSemverPrerelease) {
             core.setFailed(
-                'Release tag and package.json versions follow pre-release format, ie. `1.2.3-beta.1, but release in GitHub is not marked as `pre-release`.'
+                'Release git tag and package.json versions follow pre-release format, ie. `1.2.3-beta.1, but release in GitHub is not marked as `pre-release`.'
             );
 
             return;
         }
 
-        if (releaseIsMarkedAsPrerelease && semverHasPrereleaseTag) {
-            tag += semverPrerelease[0];
+        if (isPrerelease && hasSemverPrerelease) {
+            versionTag += semverPrerelease[0];
         }
 
-        core.setOutput('version', releaseVersionWithoutV);
-        core.setOutput('tag', tag);
+        core.setOutput('version', gitTagWithoutV);
+        core.setOutput('tag', versionTag);
     } catch (error) {
         core.setFailed(error.message);
     }
-})();
+};
+
+if (require.main === module) {
+    main();
+} else {
+    module.exports = main;
+}
