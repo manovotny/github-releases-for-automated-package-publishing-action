@@ -15,8 +15,8 @@ on:
             - '**.png'
             - '**.webp'
     workflow_dispatch:
-        schedule:
-            - cron: '00 23 * * 0'
+    schedule:
+        - cron: '00 23 * * 0'
 jobs:
     image-optimization:
         runs-on: ubuntu-latest
