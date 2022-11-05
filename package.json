@@ -28,7 +28,7 @@
         "yarn"
     ],
     "engines": {
-        "node": ">=8.6.0",
+        "node": ">=16.18.1",
         "yarn": ">=1.0.0"
     },
     "main": "index.js",
