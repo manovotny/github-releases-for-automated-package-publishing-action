@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const dotProp = require('dot-prop');
 const fs = require('fs-extra');
 const semver = require('semver');
 const dedent = require('dedent');
@@ -10,10 +9,16 @@ const main = async () => {
         const {draft: isDraft, prerelease: isPrerelease, tag_name: gitTag} = github.context.payload.release;
         const gitTagWithoutV = gitTag.slice(1);
         const packageJson = await fs.readJson('./package.json');
-        const packageJsonVersion = dotProp.get(packageJson, 'version', undefined);
+        const packageJsonVersion = packageJson?.version || undefined;
 
         if (isDraft) {
             core.setFailed('Release is a draft. Skip publish.');
+
+            return;
+        }
+
+        if (!packageJsonVersion) {
+            core.setFailed('Package.json is missing version.');
 
             return;
         }

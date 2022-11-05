@@ -34,8 +34,22 @@ describe('index', () => {
         expect(core.setFailed).toHaveBeenCalledWith('Release is a draft. Skip publish.');
     });
 
+    test('should fail if package.json is missing version', async () => {
+        jest.spyOn(core, 'setFailed');
+        fs.readJSON.mockReturnValue({});
+        github.context = generateGitHubRelease({});
+
+        await action();
+
+        expect(core.setFailed).toHaveBeenCalledTimes(1);
+        expect(core.setFailed).toHaveBeenCalledWith('Package.json is missing version.');
+    });
+
     test('should fail if release git tag does not start with a "v"', async () => {
         jest.spyOn(core, 'setFailed');
+        fs.readJSON.mockReturnValue({
+            version: '1.2.3',
+        });
         github.context = generateGitHubRelease({
             gitTag: '1.2.3',
         });

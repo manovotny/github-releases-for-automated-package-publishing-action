@@ -206,6 +206,7 @@ With all of the above in place, publishing a package is as easy as creating a ne
 When making a release, please keep in mind that this action expects and validates a few things:
 
 -   Releases marked as drafts will be ignored (ie. they will not publish).
+-   Ensure that `package.json` has a `version`.
 -   Ensure the git tag you create during the release process starts with a `v` (ie. v1.2.3).
 -   Ensure that the `version` in `package.json` matches the release tag created.
 -   Ensure versions are valid [semver](https://semver.org/) format.
