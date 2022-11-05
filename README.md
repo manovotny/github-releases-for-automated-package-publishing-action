@@ -160,7 +160,7 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   always-auth: true
-                  node-version: '12.x'
+                  node-version: '16.x'
                   registry-url: 'https://registry.npmjs.org'
 
             # Perform installs, run tests, run a build step, etc. here, as needed.
@@ -277,7 +277,7 @@ If you're still getting the error, then it's because you likely forgot to add th
   uses: actions/setup-node@v2
   with:
       always-auth: true
-      node-version: '12'
+      node-version: '16'
       registry-url: 'https://registry.npmjs.org'
 ```
 
