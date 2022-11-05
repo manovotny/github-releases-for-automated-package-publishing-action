@@ -33,12 +33,14 @@
     "main": "index.js",
     "scripts": {
         "check": "npm-check -u",
+        "coverage": "npm run unit -- --coverage",
         "build": "ncc build index.js",
         "lint": "eslint . --ext .js --ext .json",
         "lint-staged": "lint-staged",
         "prettier": "prettier --write --ignore-unknown .",
         "prettier:check": "prettier --check --ignore-unknown .",
-        "test": "npm run lint && npm run prettier:check"
+        "test": "npm run lint && npm run prettier:check && npm run coverage",
+        "unit": "jest"
     },
     "git": {
         "pre-commit": "lint-staged"
@@ -49,6 +51,7 @@
     "dependencies": {
         "@actions/core": "1.2.6",
         "@actions/github": "4.0.0",
+        "dedent": "0.7.0",
         "dot-prop": "6.0.1",
         "fs-extra": "9.1.0",
         "semver": "7.3.4"
@@ -58,6 +61,7 @@
         "@vercel/ncc": "0.27.0",
         "eslint": "8.8.0",
         "eslint-config-get-off-my-lawn": "7.1.0",
+        "jest": "29.2.2",
         "lint-staged": "13.0.3",
         "npm-check": "6.0.1",
         "prettier": "2.7.1",
