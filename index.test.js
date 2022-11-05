@@ -93,8 +93,8 @@ describe('index', () => {
             version,
         });
         github.context = generateGitHubRelease({
-            prerelease: true,
             gitTag: `v${version}`,
+            prerelease: true,
         });
 
         await action();
@@ -151,8 +151,8 @@ describe('index', () => {
             version,
         });
         github.context = generateGitHubRelease({
-            prerelease: true,
             gitTag: `v${version}`,
+            prerelease: true,
         });
 
         await action();
