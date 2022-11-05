@@ -9,7 +9,7 @@ const main = async () => {
         const {draft: isDraft, prerelease: isPrerelease, tag_name: gitTag} = github.context.payload.release;
         const gitTagWithoutV = gitTag.slice(1);
         const packageJson = await fs.readJson('./package.json');
-        const packageJsonVersion = packageJson?.version || undefined;
+        const packageJsonVersion = packageJson?.version;
 
         if (isDraft) {
             core.setFailed('Release is a draft. Skip publish.');
