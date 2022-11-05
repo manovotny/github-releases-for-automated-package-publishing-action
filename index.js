@@ -8,10 +8,10 @@ const semver = require('semver');
     try {
         const {
             draft: releaseIsDraft,
-            prerelease: releaseIsPrerelease,
+            prerelease: releaseIsMarkedAsPrerelease,
             tag_name: releaseVersion,
         } = github.context.payload.release;
-        const releaseVersionWithoutV = releaseVersion.substring(1);
+        const releaseVersionWithoutV = releaseVersion.slice(1);
         const packageJson = await fs.readJson('./package.json');
         const packageJsonVersion = dotProp.get(packageJson, 'version', undefined);
 
@@ -44,9 +44,12 @@ const semver = require('semver');
         }
 
         const semverPrerelease = semver.prerelease(releaseVersionWithoutV);
+        // eslint-disable-next-line unicorn/no-null
+        const semverHasPrereleaseTag = semverPrerelease !== null;
+
         let tag = '';
 
-        if (releaseIsPrerelease && semverPrerelease === null) {
+        if (releaseIsMarkedAsPrerelease && !semverHasPrereleaseTag) {
             core.setFailed(
                 'Release in GitHub is marked as `pre-release`, but release tag and package.json versions do not follow pre-release format, ie. `1.2.3-beta.1'
             );
@@ -54,7 +57,7 @@ const semver = require('semver');
             return;
         }
 
-        if (!releaseIsPrerelease && semverPrerelease !== null) {
+        if (!releaseIsMarkedAsPrerelease && semverHasPrereleaseTag) {
             core.setFailed(
                 'Release tag and package.json versions follow pre-release format, ie. `1.2.3-beta.1, but release in GitHub is not marked as `pre-release`.'
             );
@@ -62,7 +65,7 @@ const semver = require('semver');
             return;
         }
 
-        if (releaseIsPrerelease && semverPrerelease !== null) {
+        if (releaseIsMarkedAsPrerelease && semverHasPrereleaseTag) {
             tag += semverPrerelease[0];
         }
 

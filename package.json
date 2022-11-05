@@ -56,8 +56,8 @@
     "devDependencies": {
         "@vercel/git-hooks": "1.0.0",
         "@vercel/ncc": "0.27.0",
-        "eslint": "6.2.1",
-        "eslint-config-get-off-my-lawn": "5.0.1",
+        "eslint": "8.8.0",
+        "eslint-config-get-off-my-lawn": "7.1.0",
         "lint-staged": "13.0.3",
         "npm-check": "6.0.1",
         "prettier": "2.7.1",
