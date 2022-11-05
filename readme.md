@@ -148,7 +148,7 @@ jobs:
             # Note we set an `id` called `release`. We'll use that later...
             - name: Validate and extract release information
               id: release
-              uses: manovotny/github-releases-for-automated-package-publishing-action@v1.0.0
+              uses: manovotny/github-releases-for-automated-package-publishing-action@v2.0.0
 
             # When setting the node version for publishing a release, it's also impotant
             # to set `always-auth` and `registry-url` too. I've encountered vauge errors

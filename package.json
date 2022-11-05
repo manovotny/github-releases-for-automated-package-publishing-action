@@ -1,7 +1,7 @@
 {
     "name": "github-releases-for-automated-package-publishing-action",
     "description": "GitHub Action to validate and extract GitHub release information, used for automated package publishing.",
-    "version": "0.0.0",
+    "version": "2.0.0",
     "author": {
         "name": "Michael Novotny",
         "email": "manovotny@gmail.com",
