@@ -28,8 +28,7 @@
         "yarn"
     ],
     "engines": {
-        "node": ">=8.6.0",
-        "yarn": ">=1.0.0"
+        "node": ">=8.6.0"
     },
     "main": "index.js",
     "scripts": {
@@ -37,7 +36,7 @@
         "lint": "eslint . --ext .js --ext .json",
         "prettier": "prettier --write \"**/*.{js,json,md,yml}\"",
         "prettier:check": "prettier --check \"**/*.{js,json,md,yml}\"",
-        "test": "yarn lint && yarn prettier:check"
+        "test": "npm run lint && npm run prettier:check"
     },
     "husky": {
         "hooks": {

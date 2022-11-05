@@ -175,22 +175,23 @@ jobs:
             # If there *is not* a tag (ie. `beta`, `canary`, etc.), we publish a
             # version of a package (ie. 1.2.3).
             #
-            # This example is using yarn to publish, but you could just as easily
-            # use npm, if you prefer. It's also publishing to the NPM registry,
+            # This example is using npm to publish, but you could just as easily
+            # use yarn, if you prefer. It's also publishing to the NPM registry,
             # thus, it's using `NPM_TOKEN`, but you could just as easily use
             # `GITHUB_TOKEN` if you were publishing to the GitHub Package registry.
 
             # This will publish a "pre-release" or "tagged" version of a package.
-            - name: Publish tagged version
-              if: steps.release.outputs.tag != ''
-              run: yarn publish --new-version ${{ steps.release.outputs.version }} --tag ${{ steps.release.outputs.tag }}
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             # This will publish a version of a package.
             - name: Publish version
               if: steps.release.outputs.tag == ''
-              run: yarn publish --new-version ${{ steps.release.outputs.version }}
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish tagged version
+              if: steps.release.outputs.tag != ''
+              run: npm publish --tag ${{ steps.release.outputs.tag }}
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
