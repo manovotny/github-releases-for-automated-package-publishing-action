@@ -157,7 +157,7 @@ jobs:
             # This example is using NPM's registry. If you were publishing to GitHub's
             # Package registry, you'd use `https://npm.pkg.github.com` instead.
             - name: Set node version
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   always-auth: true
                   node-version: '16.x'
@@ -274,7 +274,7 @@ If you're still getting the error, then it's because you likely forgot to add th
 
 ```yml
 - name: Set node version
-  uses: actions/setup-node@v2
+  uses: actions/setup-node@v3
   with:
       always-auth: true
       node-version: '16'
