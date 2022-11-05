@@ -20,7 +20,6 @@ on:
 jobs:
     image-optimization:
         runs-on: ubuntu-latest
-        if: github.event.pull_request.head.repo.full_name == github.repository
         steps:
             - name: Checkout repo
               uses: actions/checkout@v3
@@ -31,7 +30,7 @@ jobs:
                   compressOnly: ${{ github.event_name != 'pull_request' }}
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
             - name: Create pull request
-              if: github.event_name != 'pull_request' && steps.images.outputs.markdown != ''
+              if: steps.images.outputs.markdown != ''
               uses: peter-evans/create-pull-request@v4
               with:
                   title: Optimizes images.
