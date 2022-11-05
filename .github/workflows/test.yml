@@ -5,39 +5,26 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Cancel running workflows
-              uses: styfle/cancel-workflow-action@0.6.0
+              uses: styfle/cancel-workflow-action@0.9.1
               with:
                   access_token: ${{ github.token }}
             - name: Checkout repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
             - name: Read node version
               id: nvm
               run: echo "::set-output name=version::$(cat .nvmrc)"
             - name: Set node version
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
-                  node-version: ${{ steps.nvm.outputs.version }}
-            - name: Cache yarn version
-              id: yarn-cache
-              uses: actions/cache@v2
-              with:
-                  path: '**/.yarn'
-                  key: yarn-cache-v1-${{ hashFiles('**/.yvmrc') }}
-            - name: Read yarn version
-              id: yvm
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: echo "::set-output name=version::$(cat .yvmrc)"
-            - name: Set yarn version
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn policies set-version ${{ steps.yvm.outputs.version }}
+                  node-version-file: '.nvmrc'
             - name: Cache node_modules
               id: node-modules-cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: '**/node_modules'
-                  key: node-modules-cache-v1-${{ hashFiles('**/yarn.lock') }}
+                  key: node-modules-cache-${{ hashFiles('**/package-lock.json') }}
             - name: Install dependencies
               if: steps.node-modules-cache.outputs.cache-hit != 'true'
-              run: yarn install --frozen-lockfile
+              run: npm ci
             - name: Run tests
-              run: yarn test
+              run: npm test
