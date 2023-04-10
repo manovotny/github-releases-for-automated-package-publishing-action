@@ -31,7 +31,7 @@ jobs:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
             - name: Create pull request
               if: steps.images.outputs.markdown != ''
-              uses: peter-evans/create-pull-request@v4
+              uses: peter-evans/create-pull-request@v5
               with:
                   title: Optimizes images.
                   branch-suffix: timestamp
